@@ -59,9 +59,14 @@ int main(int argc,char** argv) {
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   // Construct the default run manager
-  auto* runManager = G4RunManagerFactory::CreateRunManager();
-  G4int nThreads = 4;
-  runManager->SetNumberOfThreads(nThreads); 
+  // #ifdef G4MULTITHREADED
+  //   G4MTRunManager* runManager = new G4MTRunManager;
+  //  runManager->SetNumberOfThreads(1);
+ // #else
+  //  G4RunManager* runManager = new G4RunManager;
+ // #endif
+  G4RunManager* runManager = new G4RunManager;
+
 
   // set mandatory initialization classes
   runManager->SetUserInitialization(new DMXDetectorConstruction);
