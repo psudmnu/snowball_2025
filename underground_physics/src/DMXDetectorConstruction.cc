@@ -963,7 +963,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 					  theRoomTimeCut,   // Time cut
 					  theRoomMinEkine); // min energy
 
-#include "DMXDetectorRoomLimits.icc"
+// #include "DMXDetectorRoomLimits.icc"   Edit: Removes Furniture 
 
   theUserLimitsForDetector = new G4UserLimits(theDetectorStepSize,
 					      DBL_MAX, // Track Max
