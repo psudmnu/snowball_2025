@@ -98,7 +98,7 @@ private:
   G4LogicalVolume*   world_log;        // pointers
   G4VPhysicalVolume* world_phys;  
 
-#include "DMXDetectorRoom.ihh"
+// #include "DMXDetectorRoom.ihh"  Edit: Removing Furniture
 
   G4LogicalVolume*   lab_log;
   G4VPhysicalVolume* lab_phys;  
