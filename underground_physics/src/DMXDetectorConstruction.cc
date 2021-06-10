@@ -194,7 +194,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
 // include room furniture: **************************************************
 
-#include "DMXDetectorRoom.icc"
+// #include "DMXDetectorRoom.icc"  Edit: Removed Furniture 
 
   // Now start with detector assembly:
 
