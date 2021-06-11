@@ -123,11 +123,7 @@ private:
   G4LogicalVolume*   LXe_log; 
   G4VPhysicalVolume* LXe_phys;  
   G4LogicalVolume*   liqLag_log; 
-  G4VPhysicalVolume* liqLag_phys;  
-  G4LogicalVolume*   alpha_log;   
-  G4VPhysicalVolume* alpha_phys;
-  G4LogicalVolume*   americium_log;   
-  G4VPhysicalVolume* americium_phys; 
+  G4VPhysicalVolume* liqLag_phys;   
   G4LogicalVolume*   pmt_log;   
   G4VPhysicalVolume* pmt_phys; 
   G4LogicalVolume*   phcath_log;
