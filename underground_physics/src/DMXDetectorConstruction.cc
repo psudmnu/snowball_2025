@@ -310,79 +310,11 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
      "vessel_phys", vessel_log, vacuum_phys, false,0);
 
 
-  // flanges: 1=upper half (diff. inner diam.) 2=lower half
-  G4Tubs* vesseltop_flange1 = new G4Tubs("vesseltop_flange1",
-     0.*cm, vesselflangeRadius, 0.25*vesselflangeThick, 0.*deg, 360.*deg);
-  vesseltop_log1  = new G4LogicalVolume
-    (vesseltop_flange1, vessel_mat, "vesseltop_log1");  
-  vesseltop_phys1 = new G4PVPlacement
-    (0, 
-     G4ThreeVector(0.,0.,0.5*(vesselHeight+0.5*vesselflangeThick)+vesselVPos), 
-     "vesseltop_phys1", vesseltop_log1, vacuum_phys, false,0);
-
-  G4Tubs* vesseltop_flange2 = new G4Tubs("vesseltop_flange2",vesselRadius, 
-    vesselflangeRadius, 0.25*vesselflangeThick, 0.*deg, 360.*deg);
-  vesseltop_log2  = new G4LogicalVolume
-    (vesseltop_flange2, vessel_mat, "vesseltop_log2");  
-  vesseltop_phys2 = new G4PVPlacement
-    (0, 
-     G4ThreeVector(0.,0.,0.5*(vesselHeight-0.5*vesselflangeThick)+vesselVPos), 
-     "vesseltop_phys2", vesseltop_log2, vacuum_phys, false,0);
-
-
-  G4Tubs* vesselbottom_flange1 = new G4Tubs
-    ("vesselbottom_flange1",vesselRadius, vesselflangeRadius, 
-     0.25*vesselflangeThick, 0.*deg, 360.*deg);
-  vesselbottom_log1  = new G4LogicalVolume
-    (vesselbottom_flange1, vessel_mat, "vesselbottom_log1");  
-  vesselbottom_phys1 = new G4PVPlacement(0, 
-     G4ThreeVector(0.,0.,-0.5*(vesselHeight-0.5*vesselflangeThick)+vesselVPos),
-     "vesselbottom_phys1", vesselbottom_log1, vacuum_phys, false,0);
-
-  G4Tubs* vesselbottom_flange2 = new G4Tubs
-    ("vesselbottom_flange2",PMTvesselRadius, vesselflangeRadius, 
-     0.25*vesselflangeThick, 0.*deg, 360.*deg);
-  vesselbottom_log2  = new G4LogicalVolume
-    (vesselbottom_flange2, vessel_mat, "vesselbottom_log2");  
-  vesselbottom_phys2 = new G4PVPlacement(0, 
-     G4ThreeVector(0.,0.,-0.5*(vesselHeight+0.5*vesselflangeThick)+vesselVPos),
-     "vesselbottom_phys2", vesselbottom_log2, vacuum_phys, false,0);
-
-
-  G4Tubs* pmtvesselbottom_flange1 = new G4Tubs
-    ("pmtvesselbottom_flange1", PMTvesselRadius, pmtvesselflangeRadius, 
-     0.25*pmtvesselflangeThick, 0.*deg, 360.*deg);
-  pmtvesselbottom_log1  = new G4LogicalVolume
-    (pmtvesselbottom_flange1, vessel_mat, "pmtvesselbottom_log1");  
-  pmtvesselbottom_phys1 = new G4PVPlacement(0, G4ThreeVector(0.,0.,
-    (-0.5*vesselHeight-PMTvesselHeight+vesselVPos+0.25*pmtvesselflangeThick)),
-     "pmtvesselbottom_phys1", pmtvesselbottom_log1, vacuum_phys, false,0);
-
-  G4Tubs* pmtvesselbottom_flange2 = new G4Tubs
-    ("pmtvesselbottom_flange2", 0.*cm, pmtvesselflangeRadius, 
-     0.25*pmtvesselflangeThick, 0.*deg, 360.*deg);
-  pmtvesselbottom_log2  = new G4LogicalVolume
-    (pmtvesselbottom_flange2, vessel_mat, "pmtvesselbottom_log2");  
-  pmtvesselbottom_phys2 = new G4PVPlacement(0, G4ThreeVector(0.,0.,
-     -0.5*vesselHeight-PMTvesselHeight+vesselVPos-0.25*pmtvesselflangeThick),
-     "pmtvesselbottom_phys2", pmtvesselbottom_log2, vacuum_phys, false,0);
-
 
   G4VisAttributes* vessel_vat     = new G4VisAttributes(grey);
-  G4VisAttributes* pmtvessel_vat  = new G4VisAttributes(yellow);
-  G4VisAttributes* pmtvessel_vat2 = new G4VisAttributes(green);
-  //  vessel_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-  //  vessel_vat->SetForceSolid(true);
-  //  pmtvessel_vat->SetForceSolid(true);
-  //  pmtvessel_vat2->SetForceSolid(true);
+ 
   vessel_log->SetVisAttributes(vessel_vat);
-  vesseltop_log1->SetVisAttributes(vessel_vat);
-  vesselbottom_log1->SetVisAttributes(vessel_vat);
-  vesseltop_log2->SetVisAttributes(pmtvessel_vat);
-  vesselbottom_log2->SetVisAttributes(pmtvessel_vat);
-  //  pmtvesselbottom_log->SetVisAttributes(vessel_vat);
-  pmtvesselbottom_log1->SetVisAttributes(vessel_vat);
-  pmtvesselbottom_log2->SetVisAttributes(pmtvessel_vat2);
+ 
 
 
 
