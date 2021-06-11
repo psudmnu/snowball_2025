@@ -498,20 +498,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double grid2VOffset   = 4.5*ringHeight+3.50*mm;
   G4double grid2VPosition = 0.5*LXeTubeHeight - grid2VOffset;
 
-  G4Tubs* grid_tube = new G4Tubs("grid_tube", 0.*cm, gridRadius,
-     0.5*gridHeight, 0.*deg, 360.*deg);
-
-  grid1_log  = new G4LogicalVolume(grid_tube, grid_mat, "grid1_log");
-  grid1_phys = new G4PVPlacement(0,G4ThreeVector(0.*cm, 0.*cm, grid1VPosition),
-     "grid1_phys", grid1_log, LXe_phys, false, 0);
-  grid2_log  = new G4LogicalVolume(grid_tube, grid_mat, "grid2_log");
-  grid2_phys = new G4PVPlacement(0,G4ThreeVector(0.*cm, 0.*cm, grid2VPosition),
-     "grid2_phys", grid2_log, LXe_phys, false, 0);
-
-  G4VisAttributes* grid_vat = new G4VisAttributes(red);
-  grid_vat->SetVisibility(true);
-  grid1_log->SetVisAttributes(grid_vat);
-  grid2_log->SetVisAttributes(grid_vat);
   
   
   // alpha source holder ************************************************
