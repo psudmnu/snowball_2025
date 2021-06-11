@@ -227,17 +227,8 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
 
   // and finally LN2: *******************************************************
-
-  G4Tubs* LN2_tube = new G4Tubs("LN2_tube",
-     0.*cm, LN2Radius, 0.5*LN2Height, 0.*deg, 360.*deg);
-  LN2_log  = new G4LogicalVolume(LN2_tube, LN2_mat, "LN2_log");
-  LN2_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),
-     "LN2_phys", LN2_log, LN2vessel_phys, false,0);
-
-  G4VisAttributes* LN2_vat = new G4VisAttributes(green);
-  LN2_vat->SetVisibility(true);
-  LN2_log->SetVisAttributes(LN2_vat);
-
+// Completely removed this section
+ 
 
   // outer vacuum jacket volume: stainless steel ****************************
 
