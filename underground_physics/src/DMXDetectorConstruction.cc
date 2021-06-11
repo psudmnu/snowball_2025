@@ -224,17 +224,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double LN2vesselHeight = LN2Height;
   G4double LN2vesselPosZ   = 0.5*LN2vacuumHeight - 0.5*LN2vesselHeight;
 
-  G4Tubs* LN2vessel_tube = new G4Tubs("LN2vessel_tube",
-     0.*cm, LN2vesselRadius, 0.5*LN2vesselHeight, 0.*deg, 360.*deg);
-  LN2vessel_log  = new G4LogicalVolume
-    (LN2vessel_tube, LN2jacket_mat, "LN2vessel_log");
-  LN2vessel_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,LN2vesselPosZ),
-     "LN2vessel_phys", LN2vessel_log, LN2vacuum_phys, false,0);
-
-  G4VisAttributes* LN2vessel_vat = new G4VisAttributes(lgrey);
-  // LN2vessel_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-  // LN2vessel_vat->SetVisibility(true);
-  LN2vessel_log->SetVisAttributes(LN2vessel_vat);
 
 
   // and finally LN2: *******************************************************
