@@ -127,7 +127,7 @@ private:
   G4LogicalVolume*   pmt_log;   
   G4VPhysicalVolume* pmt_phys; 
   G4LogicalVolume*   phcath_log;
-  G4VPhysicalVolume* phcath_phys; 
+  
 
   G4Cache<DMXScintSD*> LXeSD; //pointer to sensitive detectors
   G4Cache<DMXPmtSD*> pmtSD;
