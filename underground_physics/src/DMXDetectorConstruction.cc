@@ -192,9 +192,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   lab_vat->SetVisibility(false);
   lab_log->SetVisAttributes(lab_vat);
 
-// include room furniture: **************************************************
 
-// #include "DMXDetectorRoom.icc"  Edit: Removed Furniture 
 
   // Now start with detector assembly:
 
@@ -209,17 +207,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double LN2PosZ            = 0.5*jacketHeight + 0.5*LN2jacketHeight 
                                 + jacketflangeHeight + PosZ;
 
-  G4Tubs* LN2jacket_tube = new G4Tubs("LN2jacket_tube",
-     0.*cm, LN2jacketRadius, 0.5*LN2jacketHeight, 0.*deg, 360.*deg);
-  LN2jacket_log  = new G4LogicalVolume
-    (LN2jacket_tube, LN2jacket_mat, "LN2jacket_log");
-  LN2jacket_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,LN2PosZ),
-     "LN2jacket_phys", LN2jacket_log, lab_phys, false,0);
-
-  G4VisAttributes* LN2jacket_vat = new G4VisAttributes(lgrey);
-  // LN2jacket_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-  // LN2jacket_vat->SetVisibility(true);
-  LN2jacket_log->SetVisAttributes(LN2jacket_vat);
 
   // LN2jacket vacuum: **********************
 
@@ -963,30 +950,13 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 					  theRoomTimeCut,   // Time cut
 					  theRoomMinEkine); // min energy
 
-// #include "DMXDetectorRoomLimits.icc"   Edit: Removes Furniture 
+
 
   theUserLimitsForDetector = new G4UserLimits(theDetectorStepSize,
 					      DBL_MAX, // Track Max
 					      theMaxTimeCuts,
 					      theMinEkine);
 
-      world_log->SetUserLimits(theUserLimitsForRoom);
-        lab_log->SetUserLimits(theUserLimitsForRoom);
-     jacket_log->SetUserLimits(theUserLimitsForRoom);
-     vacuum_log->SetUserLimits(theUserLimitsForRoom);
-     vessel_log->SetUserLimits(theUserLimitsForRoom);
-        GXe_log->SetUserLimits(theUserLimitsForDetector);
-	//        LXe_log->SetUserLimits(theUserLimitsForXenon);
-        LXe_log->SetUserLimits(theUserLimitsForDetector);
-   CuShield_log->SetUserLimits(theUserLimitsForDetector);
-       ring_log->SetUserLimits(theUserLimitsForDetector);
-     mirror_log->SetUserLimits(theUserLimitsForDetector);
-      grid1_log->SetUserLimits(theUserLimitsForDetector);
-      grid2_log->SetUserLimits(theUserLimitsForDetector);
-      alpha_log->SetUserLimits(theUserLimitsForDetector);
-  americium_log->SetUserLimits(theUserLimitsForDetector);
-        pmt_log->SetUserLimits(theUserLimitsForDetector);
-     phcath_log->SetUserLimits(theUserLimitsForDetector);
 
  return world_phys;
 
