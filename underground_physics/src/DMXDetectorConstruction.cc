@@ -253,19 +253,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   // G4double jacketflangeHeight = 53.0*mm; // defined above to get full-height
   G4double topjacketflangePosZ = 0.5*(jacketHeight+jacketflangeHeight);
 
-  G4Tubs* jacketflange_tube = new G4Tubs("jacketflange_tube",
-     0.*cm, jacketflangeRadius, 0.5*jacketflangeHeight, 0.*deg, 360.*deg);
-  jacketflange_log     = new G4LogicalVolume
-    (jacketflange_tube, jacketflange_mat, "jacketflange_log");
-  topjacketflange_phys = new G4PVPlacement
-    (0, G4ThreeVector(0.,0.,topjacketflangePosZ + PosZ),
-     "topjacketflange_phys", jacketflange_log, lab_phys, false,0);
-  bottomjacketflange_phys = new G4PVPlacement
-    (0, G4ThreeVector(0.,0.,-topjacketflangePosZ + PosZ),
-     "bottomjacketflange_phys", jacketflange_log, lab_phys, false,0);
-
-  // jacketflange_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-  jacketflange_log->SetVisAttributes(jacket_vat);
 
   // vacuum **************************************************************
 
