@@ -280,23 +280,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double coppertopThick   = 1.0*cm;
   G4double coppertopVPos    = copperVPos + 0.5*(coppertopThick+copperHeight);
 
-  G4Tubs* copper_tube = new G4Tubs("copper_tube",
-     copperInner, copperRadius, 0.5*copperHeight, 0.*deg, 360.*deg);
-  copper_log  = new G4LogicalVolume(copper_tube, copper_mat, "copper_log");
-  copper_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,copperVPos), 
-     "copper_phys", copper_log, vacuum_phys, false,0);
-
-  G4Tubs* coppertop_tube = new G4Tubs("coppertop_tube",
-     0.*cm, copperRadius, 0.5*coppertopThick, 0.*deg, 360.*deg);
-  coppertop_log  = new G4LogicalVolume
-    (coppertop_tube, copper_mat, "coppertop_log");  
-  coppertop_phys = new G4PVPlacement(0,G4ThreeVector(0.,0.,coppertopVPos), 
-     "coppertop_phys", coppertop_log, vacuum_phys, false,0);
-
-  G4VisAttributes* copper_vat = new G4VisAttributes(orange);
-  //  copper_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-  copper_log->SetVisAttributes(copper_vat);
-  coppertop_log->SetVisAttributes(copper_vat);
 
   // inner vessel jacket volume: stainless steel ************************
 
