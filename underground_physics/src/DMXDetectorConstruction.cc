@@ -513,35 +513,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double extra_offset    = (recessHeight +0.3*mm + 0.5*americiumHeight); 
   G4double alphaVPosition  = 0.5*LXeTubeHeight - alphaVOffset + extra_offset;
 
-  G4Tubs* alpha_tube  = new G4Tubs("alpha_tube", 0.*cm, alphaRadius,
-     0.5*alphaHeight,  0.*deg, 360.*deg);
-  G4Tubs* recess_tube = new G4Tubs("recess_tube", 0.*cm, recessRadius,
-     0.5*recessHeight, 0.*deg, 360.*deg);
-
-  G4SubtractionSolid* alpha_sol = new G4SubtractionSolid
-    ("alpha_sol", alpha_tube, recess_tube, G4Transform3D
-     (G4RotationMatrix(), G4ThreeVector(0. ,0. , recessVPosition)));
-  alpha_log  = new G4LogicalVolume(alpha_sol, alpha_mat, "alpha_log");
-
-  alpha_phys = new G4PVPlacement(0, G4ThreeVector(0., 0., alphaVPosition),
-                         "alpha_phys", alpha_log, LXe_phys, false, 0);
-
-  G4VisAttributes* alpha_vat = new G4VisAttributes(white);
-  alpha_vat->SetVisibility(true);
-  alpha_log ->SetVisAttributes(alpha_vat);
-
-  // alpha source HOLDER surface
-  G4OpticalSurface* OpAlphaSurface = new G4OpticalSurface("AlphaSurface", 
-  unified, ground, dielectric_metal, sigalpha=20.0*deg);
-  //G4LogicalBorderSurface* AlphaSurface =
-  new G4LogicalBorderSurface
-    ("Alpha", LXe_phys, alpha_phys, OpAlphaSurface);
-
-  std::vector<G4double> alpha_PP   = { 6.00*eV, 7.50*eV };
-  std::vector<G4double> alpha_REFL = { 0.05, 0.05 };
-  G4MaterialPropertiesTable *alpha_mt = new G4MaterialPropertiesTable();
-  alpha_mt->AddProperty("REFLECTIVITY", alpha_PP, alpha_REFL);
-  OpAlphaSurface->SetMaterialPropertiesTable(alpha_mt);
+  
 
   // americium ***********************************************************
 
@@ -550,35 +522,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double americiumRadius    = recessRadius - 50.0*micrometer;
   G4double americiumVOffset   = 0.5*(alphaHeight-americiumHeight)-recessHeight;
   G4double americiumVPosition = americiumVOffset;
-
-  sourceZ = vesselVPos + LXeVPos + alphaVPosition + americiumVPosition + PosZ;
-  G4cout << G4endl << "Calibration source centre (X,Y,Z):  0, 0, " 
-	 << sourceZ/mm << " mm" << G4endl;
-
-  G4Tubs* americium_tube = new G4Tubs("americium_tube", 0.*cm,
-     americiumRadius, 0.5*americiumHeight, 0.*deg, 360.*deg);
-  americium_log  = new G4LogicalVolume(americium_tube, americium_mat,
-     "americium_log");
-  americium_phys = new G4PVPlacement(0, G4ThreeVector(0., 0.,
-     americiumVPosition),"americium_phys", americium_log, alpha_phys,false,0);
-
-  // americium optical properties:
-  G4OpticalSurface* OpAmericiumSurface = new G4OpticalSurface
-    ("AmericiumSurface", unified, ground, dielectric_metal, sigalpha=5.0*deg);
-  //G4LogicalBorderSurface* AmericiumSurface =
-  new G4LogicalBorderSurface
-    ("Americium", LXe_phys, americium_phys, OpAmericiumSurface);
-
-  std::vector<G4double> americium_PP   = { 6.00*eV, 7.50*eV };
-  std::vector<G4double> americium_REFL = { 0.7, 0.65 };
-  G4MaterialPropertiesTable *americium_mt = new G4MaterialPropertiesTable();
-  americium_mt->AddProperty("REFLECTIVITY", americium_PP, americium_REFL);
-  OpAlphaSurface->SetMaterialPropertiesTable(americium_mt);
-
-  G4VisAttributes* americium_vat= new G4VisAttributes(cyan);
-  americium_vat->SetVisibility(true);
-  americium_vat->SetForceSolid(true);
-  americium_log->SetVisAttributes(americium_vat);
 
 
   // Photomultiplier: ETL 9829 QA ****************************************
