@@ -112,10 +112,6 @@ private:
   G4VPhysicalVolume* jacket_phys;
   G4LogicalVolume*   vacuum_log;
   G4VPhysicalVolume* vacuum_phys;
-  G4LogicalVolume*   copper_log;
-  G4VPhysicalVolume* copper_phys;
-  G4LogicalVolume*   coppertop_log;
-  G4VPhysicalVolume* coppertop_phys;
   G4LogicalVolume*   vessel_log;
   G4VPhysicalVolume* vessel_phys;
   G4LogicalVolume*   vesseltop_log1;
