@@ -110,9 +110,6 @@ private:
 
   G4LogicalVolume*   jacket_log;
   G4VPhysicalVolume* jacket_phys;
-  G4LogicalVolume*   jacketflange_log;
-  G4VPhysicalVolume* topjacketflange_phys;
-  G4VPhysicalVolume* bottomjacketflange_phys;
   G4LogicalVolume*   vacuum_log;
   G4VPhysicalVolume* vacuum_phys;
   G4LogicalVolume*   copper_log;
