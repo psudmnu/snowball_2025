@@ -98,12 +98,12 @@ private:
   G4LogicalVolume*   world_log;        // pointers
   G4VPhysicalVolume* world_phys;  
 
-// #include "DMXDetectorRoom.ihh"  Edit: Removing Furniture
+
 
   G4LogicalVolume*   lab_log;
   G4VPhysicalVolume* lab_phys;  
 
-  G4LogicalVolume*   LN2jacket_log;
+ 
   G4VPhysicalVolume* LN2jacket_phys;
   G4LogicalVolume*   LN2vacuum_log;
   G4VPhysicalVolume* LN2vacuum_phys;
