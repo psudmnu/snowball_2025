@@ -464,36 +464,11 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double CuShieldVPosition   = -0.5*LXeTubeHeight - PMTDetectorHeight 
                                 + 0.5*CuShieldHeight;
 
-  // Zero co-ordinate of the union is the zero of the first volume, 
-  // i.e. the offset is still present
 
-  G4Tubs* CuShield_tube = new G4Tubs("CuShield_tube", CuShieldInnerRadius,
-     CuShieldOuterRadius, 0.5*CuShieldHeight, 0.*deg, 360.*deg);
-  CuShield_log  = new G4LogicalVolume(CuShield_tube, CuShield_mat, 
-				     "CuShield_log");
-  CuShield_phys = new G4PVPlacement(0, 
-     G4ThreeVector(0.*cm, 0.*cm, CuShieldVPosition), 
-     "CuShield_phys", CuShield_log, LXe_phys, false, 0);
 
-  //  G4VisAttributes* CuShield_vat= new G4VisAttributes(magenta);
-  G4VisAttributes* CuShield_vat = new G4VisAttributes(brown);
-  //  CuShield_vat->SetForceSolid(true);
-  CuShield_vat->SetVisibility(true);
-  CuShield_log->SetVisAttributes(CuShield_vat);
-
-  // Cu shield surface
+ 
   G4double sigalpha;
-  G4OpticalSurface* OpCuShieldSurface = new G4OpticalSurface
-    ("ShieldSurface", unified, ground, dielectric_metal, sigalpha=30.0*deg);
-  //G4LogicalBorderSurface* ShieldSurface = 
-  new G4LogicalBorderSurface
-    ("Shield", LXe_phys, CuShield_phys, OpCuShieldSurface);
-
-  std::vector<G4double> CuShield_PP   = { 7.0*eV, 7.50*eV };
-  std::vector<G4double> CuShield_REFL = { 0.3, 0.2 };
-  G4MaterialPropertiesTable *CuShield_mt = new G4MaterialPropertiesTable();
-  CuShield_mt->AddProperty("REFLECTIVITY", CuShield_PP, CuShield_REFL);
-  OpCuShieldSurface->SetMaterialPropertiesTable(CuShield_mt);
+  
 
   // rings ***************************************************************
 
