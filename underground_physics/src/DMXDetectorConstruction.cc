@@ -214,14 +214,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double LN2vacuumRadius     = LN2jacketRadius - LN2jacketMetalThick;
   G4double LN2vacuumHeight     = LN2jacketHeight - LN2jacketMetalThick;
 
-  G4Tubs* LN2vacuum_tube = new G4Tubs("LN2vacuum_tube",
-     0.*cm, LN2vacuumRadius, 0.5*LN2vacuumHeight, 0.*deg, 360.*deg);
-  LN2vacuum_log  = new G4LogicalVolume
-    (LN2vacuum_tube, vacuum_mat, "LN2vacuum_log");
-  LN2vacuum_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),
-     "LN2vacuum_phys", LN2vacuum_log, LN2jacket_phys, false,0);
-
-  LN2vacuum_log->SetVisAttributes(G4VisAttributes::GetInvisible());
+  
 
   // LN2 vessel: ************************************************************
 
