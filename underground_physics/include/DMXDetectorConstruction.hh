@@ -107,9 +107,7 @@ private:
 
 
  
-  G4VPhysicalVolume* LN2vessel_phys;  
-  G4LogicalVolume*   LN2_log;
-  G4VPhysicalVolume* LN2_phys;
+
   G4LogicalVolume*   jacket_log;
   G4VPhysicalVolume* jacket_phys;
   G4LogicalVolume*   jacketflange_log;
