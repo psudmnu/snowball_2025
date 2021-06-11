@@ -114,18 +114,8 @@ private:
   G4VPhysicalVolume* vacuum_phys;
   G4LogicalVolume*   vessel_log;
   G4VPhysicalVolume* vessel_phys;
-  G4LogicalVolume*   vesseltop_log1;
   G4VPhysicalVolume* vesseltop_phys1;
-  G4LogicalVolume*   vesseltop_log2;
-  G4VPhysicalVolume* vesseltop_phys2;
-  G4LogicalVolume*   vesselbottom_log1;
-  G4VPhysicalVolume* vesselbottom_phys1;
-  G4LogicalVolume*   vesselbottom_log2;
   G4VPhysicalVolume* vesselbottom_phys2;
-  G4LogicalVolume*   pmtvesselbottom_log1;
-  G4VPhysicalVolume* pmtvesselbottom_phys1;
-  G4LogicalVolume*   pmtvesselbottom_log2;
-  G4VPhysicalVolume* pmtvesselbottom_phys2;
   G4LogicalVolume*   GXe_log;
   G4VPhysicalVolume* GXe_phys;  
   G4LogicalVolume*   gaslag_log;
