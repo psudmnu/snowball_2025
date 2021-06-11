@@ -487,31 +487,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double mirrorVOffset   = 0.5*ringHeight;
   G4double mirrorVPosition = -0.5*GXeHeight + gasGap +mirrorVOffset;
 
-  G4Tubs* mirror_tube = new G4Tubs("mirror_tube", 0.*cm, mirrorRadius,
-     0.5*mirrorHeight, 0.*deg, 360.*deg);
-  mirror_log  = new G4LogicalVolume(mirror_tube, mirror_mat, "mirror_log");
-  mirror_phys = new G4PVPlacement(0, 
-     G4ThreeVector(0.*cm, 0.*cm, mirrorVPosition),
-     "mirror_phys", mirror_log, GXe_phys, false, 0);
-
-  G4VisAttributes* mirror_vat = new G4VisAttributes(cyan);
-  mirror_vat->SetVisibility(true);
-  //  mirror_vat->SetForceSolid(true);
-  mirror_log->SetVisAttributes(mirror_vat);
-
-
-  // mirror surface
-  G4OpticalSurface * OpMirrorSurface = new G4OpticalSurface
-    ("MirrorSurface", unified, ground, dielectric_metal, sigalpha=5.0*deg);
-  //G4LogicalBorderSurface* MirrorSurface = 
-  new G4LogicalBorderSurface
-    ("Mirror", GXe_phys, mirror_phys, OpMirrorSurface);
-
-  std::vector<G4double> mirror_PP   = { 6.00*eV, 7.50*eV };
-  std::vector<G4double> mirror_REFL = { 0.83, 0.78 };
-  G4MaterialPropertiesTable *mirror_mt = new G4MaterialPropertiesTable();
-  mirror_mt->AddProperty("REFLECTIVITY", mirror_PP, mirror_REFL);
-  OpMirrorSurface->SetMaterialPropertiesTable(mirror_mt);
+  
 
   // Grids  *************************************************************
 
