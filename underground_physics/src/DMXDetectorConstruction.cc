@@ -561,46 +561,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double phcathVOffset     = 0.5*pmtHeight-2.*pmtRadius*std::cos(30.0*deg);
   G4double phcathVPosition   = phcathVOffset;
 
-  G4Sphere* phcath_sol = new G4Sphere("phcath_sphere",
-     2.*pmtRadius-1.6*mm, 2.*pmtRadius-1.59*mm, 0.*deg, 360.*deg, 0.*deg, 
-     27.0*deg);
-
-  phcath_log  = new G4LogicalVolume(phcath_sol, phcath_mat, "phcath_log");
-  phcath_phys = new G4PVPlacement(0, G4ThreeVector(0., 0., phcathVPosition),
-     "phcath_phys", phcath_log, pmt_phys, false, 0);
-
-  G4OpticalSurface*  phcath_opsurf = new G4OpticalSurface("phcath_opsurf",
-     unified, polished, dielectric_dielectric);
-  //G4LogicalBorderSurface* phcath_surf = 
-  new G4LogicalBorderSurface
-    ("phcath_surf", pmt_phys, phcath_phys, phcath_opsurf);
-
-  std::vector<G4double> phcath_PP   = { 6.00*eV, 7.50*eV };
-  // std::vector<G4double> phcath_REFL = { 0.0, 0.0};
-  // G4MaterialPropertiesTable* phcath_mt = new G4MaterialPropertiesTable();
-  // phcath_mt->AddProperty("REFLECTIVITY", phcath_PP, phcath_REFL);
-  // phcath_opsurf->SetMaterialPropertiesTable(phcath_mt);
-
-
-  //**Photocathode surface properties
-  std::vector<G4double> photocath_EFF={1.,1.}; //Enables 'detection' of photons
-  std::vector<G4double> photocath_ReR={1.92,1.92};
-  std::vector<G4double> photocath_ImR={1.69,1.69};
-  G4MaterialPropertiesTable* photocath_mt = new G4MaterialPropertiesTable();
-  photocath_mt->AddProperty("EFFICIENCY",phcath_PP,photocath_EFF);
-  photocath_mt->AddProperty("REALRINDEX",phcath_PP,photocath_ReR);
-  photocath_mt->AddProperty("IMAGINARYRINDEX",phcath_PP,photocath_ImR);
-  G4OpticalSurface* photocath_opsurf=
-    new G4OpticalSurface("photocath_opsurf",glisur,polished,
-                         dielectric_metal);
-  photocath_opsurf->SetMaterialPropertiesTable(photocath_mt);
-
-  G4VisAttributes* phcath_vat= new G4VisAttributes(lblue);
-  phcath_vat->SetForceSolid(true);
-  phcath_vat->SetVisibility(true);
-  phcath_log->SetVisAttributes(phcath_vat);
-
-  new G4LogicalSkinSurface("photocath_surf",phcath_log,photocath_opsurf);
+  
 
   // ......................................................................
   // attach user limits ...................................................
