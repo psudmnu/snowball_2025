@@ -128,10 +128,6 @@ private:
   G4VPhysicalVolume* alpha_phys;
   G4LogicalVolume*   americium_log;   
   G4VPhysicalVolume* americium_phys; 
-  G4LogicalVolume*   grid1_log;   
-  G4VPhysicalVolume* grid1_phys; 
-  G4LogicalVolume*   grid2_log;   
-  G4VPhysicalVolume* grid2_phys; 
   G4LogicalVolume*   pmt_log;   
   G4VPhysicalVolume* pmt_phys; 
   G4LogicalVolume*   phcath_log;
