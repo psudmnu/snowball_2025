@@ -120,8 +120,6 @@ private:
   G4VPhysicalVolume* GXe_phys;  
   G4LogicalVolume*   gaslag_log;
   G4VPhysicalVolume* gaslag_phys;  
-  G4LogicalVolume*   CuShield_log; 
-  G4VPhysicalVolume* CuShield_phys;  
   G4LogicalVolume*   LXe_log; 
   G4VPhysicalVolume* LXe_phys;  
   G4LogicalVolume*   liqLag_log; 
