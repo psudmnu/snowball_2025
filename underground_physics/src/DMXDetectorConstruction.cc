@@ -236,16 +236,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   //  G4double jacketHeight     = 680.0*mm; // defined above to get full-height
   G4double jacketMetalThick = LN2jacketMetalThick;
 
-  G4Tubs* jacket_tube = new G4Tubs("jacket_tube",
-     0.*cm, jacketRadius, 0.5*jacketHeight, 0.*deg, 360.*deg);
-  jacket_log  = new G4LogicalVolume(jacket_tube, jacket_mat, "jacket_log");
-  jacket_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,PosZ),
-     "jacket_phys", jacket_log, lab_phys, false,0);
-
-  G4VisAttributes* jacket_vat = new G4VisAttributes(grey);
-  // jacket_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-  jacket_log->SetVisAttributes(jacket_vat);
-
 
   // outer vacuum jacket flanges: stainless steel *************************
 
@@ -263,7 +253,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
      0.*cm, vacuumRadius, 0.5*vacuumHeight, 0.*deg, 360.*deg);
   vacuum_log  = new G4LogicalVolume(vacuum_tube, vacuum_mat, "vacuum_log");
   vacuum_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),
-     "vacuum_phys", vacuum_log, jacket_phys, false,0);
+     "vacuum_phys", vacuum_log, world_phys, false,0);	// Changed jacket_phys to world_phys
 
   // G4VisAttributes* vacuum_vat= new G4VisAttributes(lgrey);
   vacuum_log->SetVisAttributes(G4VisAttributes::GetInvisible());
