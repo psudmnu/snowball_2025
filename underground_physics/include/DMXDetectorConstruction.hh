@@ -109,8 +109,7 @@ private:
  
 
   
-  G4LogicalVolume*   vacuum_log;
-  G4VPhysicalVolume* vacuum_phys;
+
   G4LogicalVolume*   vessel_log;
   G4VPhysicalVolume* vessel_phys;
   G4VPhysicalVolume* vesseltop_phys1;
