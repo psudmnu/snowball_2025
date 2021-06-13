@@ -276,27 +276,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double vesselVPos            = 7.0*cm;
   G4double TotalvesselHeight     = PMTvesselHeight + vesselHeight;
 
-  G4Tubs* vessel_tube    = new G4Tubs("vessel_tube",
-     0.*cm, vesselRadius, 0.5*vesselHeight, 0.*deg, 360.*deg);
-  G4Tubs* PMTvessel_tube = new G4Tubs("PMTvessel_tube",
-     0.*cm, PMTvesselRadius, 0.5*PMTvesselHeight, 0.*deg, 360.*deg);
-
-  G4UnionSolid* vessel_sol = new G4UnionSolid
-    ("vessel_sol", vessel_tube, PMTvessel_tube,
-     G4Transform3D(G4RotationMatrix(), 
-		   G4ThreeVector(0,0,-0.5*(vesselHeight+PMTvesselHeight))));
-
-  vessel_log  = new G4LogicalVolume(vessel_sol, vessel_mat, "vessel_log");
-  vessel_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,vesselVPos), 
-     "vessel_phys", vessel_log, world_phys, false,0);		// Changed vacuum_phys to world_phys
-
-
-
-  G4VisAttributes* vessel_vat     = new G4VisAttributes(grey);
- 
-  vessel_log->SetVisAttributes(vessel_vat);
- 
-
 
 
   // *********************************************************************
@@ -318,7 +297,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
      0.*cm, DetectorRadius, 0.5*GXeHeight, 0.*deg, 360.*deg);
   GXe_log  = new G4LogicalVolume(GXe_tube, GXe_mat, "GXe_log");
   GXe_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,GXeVPos), 
-     "GXe_phys", GXe_log, vessel_phys, false,0);
+     "GXe_phys", GXe_log, world_phys, false,0);	// Changed vessel_phys to world_phys
 
   G4VisAttributes* GXe_vat = new G4VisAttributes(cyan);
   // GXe_vat->SetForceSolid(true);
@@ -346,7 +325,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
   LXe_log  = new G4LogicalVolume(LXe_sol, LXe_mat, "LXe_log");
   LXe_phys = new G4PVPlacement(0, G4ThreeVector(0.*cm, 0.*cm, LXeVPos), 
-    "LXe_phys", LXe_log, vessel_phys, false, 0);
+    "LXe_phys", LXe_log, world_phys, false, 0);		// Changed vessel_phys to world_phys
 
   // attributes
   G4VisAttributes* LXe_vat = new G4VisAttributes(lblue);
