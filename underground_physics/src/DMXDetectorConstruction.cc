@@ -249,15 +249,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double vacuumRadius = jacketRadius - jacketMetalThick;
   G4double vacuumHeight = jacketHeight - jacketMetalThick;
 
-  G4Tubs* vacuum_tube = new G4Tubs("vacuum_tube",
-     0.*cm, vacuumRadius, 0.5*vacuumHeight, 0.*deg, 360.*deg);
-  vacuum_log  = new G4LogicalVolume(vacuum_tube, vacuum_mat, "vacuum_log");
-  vacuum_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),
-     "vacuum_phys", vacuum_log, world_phys, false,0);	// Changed jacket_phys to world_phys
-
-  // G4VisAttributes* vacuum_vat= new G4VisAttributes(lgrey);
-  vacuum_log->SetVisAttributes(G4VisAttributes::GetInvisible());
-
 
   // copper cooling jacket volume: **************************************
 
@@ -297,7 +288,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
   vessel_log  = new G4LogicalVolume(vessel_sol, vessel_mat, "vessel_log");
   vessel_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,vesselVPos), 
-     "vessel_phys", vessel_log, vacuum_phys, false,0);
+     "vessel_phys", vessel_log, world_phys, false,0);		// Changed vacuum_phys to world_phys
 
 
 
