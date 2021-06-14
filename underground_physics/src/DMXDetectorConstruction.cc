@@ -197,69 +197,23 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   // Now start with detector assembly:
 
   // first LN2 cooling container: *******************************************
-
-  G4double PosZ = -25.3*cm; // extra z-pos to correspond with height in lab
-
-  G4double LN2jacketRadius    = 107.5*mm;
-  G4double LN2jacketHeight    = 590.0*mm;
-  G4double jacketHeight       = 680.0*mm;
-  G4double jacketflangeHeight = 53.0*mm;
-  G4double LN2PosZ            = 0.5*jacketHeight + 0.5*LN2jacketHeight 
-                                + jacketflangeHeight + PosZ;
-
-
   // LN2jacket vacuum: **********************
 
   G4double LN2jacketMetalThick = 2.0*mm;
-  G4double LN2vacuumRadius     = LN2jacketRadius - LN2jacketMetalThick;
-  G4double LN2vacuumHeight     = LN2jacketHeight - LN2jacketMetalThick;
-
   
 
   // LN2 vessel: ************************************************************
-
-  G4double LN2Radius       = 76.0*mm;
-  G4double LN2Height       = 590.0*mm - 2.*LN2jacketMetalThick;
-  G4double LN2vesselRadius = LN2Radius + LN2jacketMetalThick;
-  G4double LN2vesselHeight = LN2Height;
-  G4double LN2vesselPosZ   = 0.5*LN2vacuumHeight - 0.5*LN2vesselHeight;
-
-
-
   // and finally LN2: *******************************************************
-// Completely removed this section
- 
-
   // outer vacuum jacket volume: stainless steel ****************************
-
-  G4double jacketRadius     = 127.5*mm;
-  //  G4double jacketHeight     = 680.0*mm; // defined above to get full-height
+	
   G4double jacketMetalThick = LN2jacketMetalThick;
 
-
   // outer vacuum jacket flanges: stainless steel *************************
-
-  G4double jacketflangeRadius  = 127.5*mm;
-  // G4double jacketflangeHeight = 53.0*mm; // defined above to get full-height
-  G4double topjacketflangePosZ = 0.5*(jacketHeight+jacketflangeHeight);
-
-
   // vacuum **************************************************************
-
-  G4double vacuumRadius = jacketRadius - jacketMetalThick;
-  G4double vacuumHeight = jacketHeight - jacketMetalThick;
-
-
   // copper cooling jacket volume: **************************************
 
-  G4double copperMetalThick = 3.0*mm;
-  G4double copperRadius     = 103.5*mm + copperMetalThick;
-  G4double copperHeight     = 420.0*mm;
-  G4double copperInner      = copperRadius - copperMetalThick;
+ 
   G4double vesselHeight     = 320.0*mm;
-  G4double copperVPos       = 0.5*(vesselHeight-copperHeight) + 13.0*cm;
-  G4double coppertopThick   = 1.0*cm;
-  G4double coppertopVPos    = copperVPos + 0.5*(coppertopThick+copperHeight);
 
 
   // inner vessel jacket volume: stainless steel ************************
@@ -267,13 +221,10 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   //  G4double vesselHeight = 320.0*mm; // - moved earlier
   G4double vesselMetalThick      = jacketMetalThick;
   G4double vesselRadius          = 75.0*mm + vesselMetalThick;
-  G4double vesselflangeRadius    = 101.5*mm;
-  G4double vesselflangeThick     = 40.0*mm;
+  
   G4double PMTvesselRadius       = 31.0*mm + vesselMetalThick;
   G4double PMTvesselHeight       = 152.0*mm;
-  G4double pmtvesselflangeRadius = 52.0*mm;
-  G4double pmtvesselflangeThick  = 32.0*mm;
-  G4double vesselVPos            = 7.0*cm;
+  
   G4double TotalvesselHeight     = PMTvesselHeight + vesselHeight;
 
 
@@ -307,13 +258,15 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 */
   // liquid phase *******************************************************
 
-  G4double LXeHeight         = mirrorVPos - gasGap;
+  G4double LXeHeight         = 0.*cm;
   G4double PMTDetectorRadius = PMTvesselRadius - vesselMetalThick;
   G4double PMTDetectorHeight = PMTvesselHeight;
-  G4double LXeTubeHeight     = LXeHeight - PMTDetectorHeight;
-  G4double LXe_solVPos       = -0.5*(LXeTubeHeight+PMTDetectorHeight);
-  G4double LXeVPos           = -0.5*TotalvesselHeight + 0.5*LXeHeight;
-
+  G4double LXeTubeHeight     = 5.*cm;
+  G4double LXe_solVPos       = 0.*cm;
+  G4double LXeVPos           = 0.*cm;
+  G4double LXe_InnerRadius   = 0.*cm;
+  G4double LXe_OuterRadius   = 5.*cm;
+	
   G4Tubs* LXe_tube = new G4Tubs("LXe_tube",
      0.*cm, DetectorRadius, 0.5*LXeTubeHeight, 0.*deg, 360.*deg);
   
@@ -411,89 +364,13 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 */
 
   // Cu Shield **********************************************************
-
-  G4double CuShieldHeight      = 17.7*cm;
-  G4double CuShieldThickness   = 2.4*mm;
-  G4double CuShieldOuterRadius = 3.0*cm;
-  G4double CuShieldInnerRadius = CuShieldOuterRadius-CuShieldThickness;
-  G4double CuShieldVPosition   = -0.5*LXeTubeHeight - PMTDetectorHeight 
-                                + 0.5*CuShieldHeight;
-
-
-
- 
-  G4double sigalpha;
-  
-
   // rings ***************************************************************
-
-  G4double ringHeight      =  4.*mm;
-  G4double ringOuterRadius =  4.0*cm;
-  G4double ringInnerRadius =  CuShieldOuterRadius;
-  G4double ringVOffset     =  0.5*ringHeight;
-  G4double ringVPosition   =  -0.5*GXeHeight + gasGap +ringVOffset;
-
-  
-
   // Mirror *************************************************************
-
-  G4double mirrorHeight    = 2.0*mm;
-  G4double mirrorRadius    = ringInnerRadius;
-  G4double mirrorVOffset   = 0.5*ringHeight;
-  G4double mirrorVPosition = -0.5*GXeHeight + gasGap +mirrorVOffset;
-
-  
-
   // Grids  *************************************************************
-
-  G4double gridHeight     = 0.100*mm;
-  G4double gridRadius     = ringInnerRadius;
-  G4double grid1VOffset   = 3.5*ringHeight+1.75*mm;
-  G4double grid1VPosition = 0.5*LXeTubeHeight - grid1VOffset;
-  G4double grid2VOffset   = 4.5*ringHeight+3.50*mm;
-  G4double grid2VPosition = 0.5*LXeTubeHeight - grid2VOffset;
-
-  
-  
   // alpha source holder ************************************************
-  
-  G4double alphaHeight     = 0.7*mm; // total lead thickness = 1.23 mm
-  G4double recessHeight    = 0.3*mm;  // totals lead thickness = 1.23 mm
-  G4double alphaRadius     = 1.2*mm; // was 0.8
-  G4double recessRadius    = 0.35*mm; // was 0.5 was 0.2
-  G4double recessVPosition = 0.5*(alphaHeight - recessHeight);
-
-  G4double alphaVOffset    = grid1VOffset-0.5*alphaHeight - gridHeight;
-  G4double americiumHeight = 3000.*nanometer; // assumes ~1% Am  
-  G4double extra_offset    = (recessHeight +0.3*mm + 0.5*americiumHeight); 
-  G4double alphaVPosition  = 0.5*LXeTubeHeight - alphaVOffset + extra_offset;
-
-  
-
   // americium ***********************************************************
-
-  // moved above for the "extra_offset":
-  // G4double americiumHeight    = 600.*nanometer; // assumes ~1% Am
-  G4double americiumRadius    = recessRadius - 50.0*micrometer;
-  G4double americiumVOffset   = 0.5*(alphaHeight-americiumHeight)-recessHeight;
-  G4double americiumVPosition = americiumVOffset;
-
-
   // Photomultiplier: ETL 9829 QA ****************************************
-
-  G4double pmtHeight    = 12.0*cm;
-  G4double pmtRadius    = 2.6*cm;
-  G4double pmtVOffset   = 1.0*cm;
-  G4double pmtVPosition = -0.5*(LXeTubeHeight+pmtHeight)+pmtVOffset;
-
-
   // photocathode *******************************************************
-
-  G4double phcathVOffset     = 0.5*pmtHeight-2.*pmtRadius*std::cos(30.0*deg);
-  G4double phcathVPosition   = phcathVOffset;
-
-  
-
   // ......................................................................
   // attach user limits ...................................................
 
