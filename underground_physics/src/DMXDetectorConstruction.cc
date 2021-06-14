@@ -271,7 +271,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
      0.*cm, DetectorRadius, 0.5*LXeTubeHeight, 0.*deg, 360.*deg);
   
 
-  LXe_log  = new G4LogicalVolume(LXe_tube, LXe_mat, "LXe_log");
+  LXe_log  = new G4LogicalVolume(LXe_tube, H2O_mat, "LXe_log");
   LXe_phys = new G4PVPlacement(0, G4ThreeVector(0.*cm, 0.*cm, LXeVPos), 
     "LXe_phys", LXe_log, lab_phys, false, 0);		
 
