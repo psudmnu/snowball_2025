@@ -292,7 +292,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double DetectorRadius = vesselRadius - vesselMetalThick;
   G4double GXeHeight      = TotalvesselHeight - mirrorVPos + gasGap;
   G4double GXeVPos        = 0.5*vesselHeight - 0.5*GXeHeight;
-
+/*
   G4Tubs* GXe_tube = new G4Tubs("GXe_tube",
      0.*cm, DetectorRadius, 0.5*GXeHeight, 0.*deg, 360.*deg);
   GXe_log  = new G4LogicalVolume(GXe_tube, GXe_mat, "GXe_log");
@@ -304,7 +304,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   GXe_vat->SetVisibility(true);
   GXe_log->SetVisAttributes(GXe_vat);
 
-
+*/
   // liquid phase *******************************************************
 
   G4double LXeHeight         = mirrorVPos - gasGap;
@@ -338,7 +338,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
   G4double laggingThickness = 10.*micrometer;
   G4double laggingRadius    = DetectorRadius - laggingThickness;
-
+/*
   G4Tubs* gaslag_tube = new G4Tubs("gaslag_tube", laggingRadius, 
      DetectorRadius, 0.5*GXeHeight, 0.*deg, 360.*deg);
   gaslag_log  = new G4LogicalVolume(gaslag_tube, vessel_mat, "gaslag_log");
@@ -351,14 +351,14 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   gaslag_vat->SetVisibility(true);
   gaslag_log->SetVisAttributes(gaslag_vat);
 
-
+*/
   // liquid phase vessel lagging - for optical properties:
 
   G4double lagTubeRadius = DetectorRadius - laggingThickness;
   G4double lagTubeHeight = LXeHeight - PMTDetectorHeight;
   G4double lagPMTRadius  = PMTDetectorRadius - laggingThickness;
   G4double lagPMTHeight  = PMTDetectorHeight;
-
+/*
   G4Tubs* liqLag_tube = new G4Tubs("liqlag_tube", lagTubeRadius,
      DetectorRadius, 0.5*lagTubeHeight, 0.*deg, 360.*deg);
   G4Tubs* lagPMT_tube = new G4Tubs("lagPMT_tube", lagPMTRadius, 
@@ -387,10 +387,10 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   // liquid and gas phase - so removed below:
   /*
   G4LogicalBorderSurface* VesselSurface;
-  VesselSurface = new G4LogicalBorderSurface
+  VesselSurface = new G4LogicalBorderSurface	// These three lines were originally commented out
     ("Vessel", liqPhase_phys, vessel_phys, OpVesselSurface);
   */
-
+/*
   std::vector<G4double> vessel_PP   = { 6.5*eV, 7.50*eV };
   std::vector<G4double> vessel_REFL = { 0.2, 0.2 };
   G4MaterialPropertiesTable* vessel_mt = new G4MaterialPropertiesTable();
@@ -413,7 +413,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   new G4LogicalBorderSurface
     ("LiquidVessel", LXe_phys, liqLag_phys, OpVesselSurface);
 
-
+*/
 
   // Cu Shield **********************************************************
 
