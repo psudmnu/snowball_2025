@@ -314,22 +314,17 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double LXe_solVPos       = -0.5*(LXeTubeHeight+PMTDetectorHeight);
   G4double LXeVPos           = -0.5*TotalvesselHeight + 0.5*LXeHeight;
 
-  G4Tubs* LXe_tube = new G4Tubs("GXe_tube",
+  G4Tubs* LXe_tube = new G4Tubs("LXe_tube",
      0.*cm, DetectorRadius, 0.5*LXeTubeHeight, 0.*deg, 360.*deg);
-  G4Tubs* PMTdetector_tube = new G4Tubs("PMTdetector_tube",
-   0.*cm, PMTDetectorRadius, 0.5*PMTDetectorHeight, 0.*deg, 360.*deg);
+  
 
-  G4UnionSolid* LXe_sol = new G4UnionSolid
-    ("LXe_sol", LXe_tube, PMTdetector_tube,
-    G4Transform3D(G4RotationMatrix(), G4ThreeVector(0,0,LXe_solVPos)));
-
-  LXe_log  = new G4LogicalVolume(LXe_sol, LXe_mat, "LXe_log");
+  LXe_log  = new G4LogicalVolume(LXe_tube, LXe_mat, "LXe_log");
   LXe_phys = new G4PVPlacement(0, G4ThreeVector(0.*cm, 0.*cm, LXeVPos), 
-    "LXe_phys", LXe_log, world_phys, false, 0);		// Changed vessel_phys to world_phys
+    "LXe_phys", LXe_log, lab_phys, false, 0);		
 
   // attributes
   G4VisAttributes* LXe_vat = new G4VisAttributes(lblue);
-  // LXe_vat->SetForceSolid(true);
+  LXe_vat->SetForceSolid(true);
   LXe_vat->SetVisibility(true);
   LXe_log->SetVisAttributes(LXe_vat);
 
@@ -490,30 +485,6 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double pmtRadius    = 2.6*cm;
   G4double pmtVOffset   = 1.0*cm;
   G4double pmtVPosition = -0.5*(LXeTubeHeight+pmtHeight)+pmtVOffset;
-
-  G4Sphere* pmt_window = new G4Sphere("pmt_sphere", 0.*cm, 2.*pmtRadius, 
-     0.*deg, 360.*deg, 0.*deg, 30.0*deg);
-  G4Tubs* pmt_tube = new G4Tubs("pmt_tube", 0.*cm,  pmtRadius, 0.5*pmtHeight,
-     0.*deg, 360.*deg);
-  
-  G4UnionSolid* pmt_sol = new G4UnionSolid("pmt_sol", pmt_tube, pmt_window,
-    G4Transform3D(G4RotationMatrix(), G4ThreeVector(0,0,0.5*pmtHeight
-    -2.*pmtRadius*std::cos(30.0*deg))));
-
-  pmt_log  = new G4LogicalVolume(pmt_sol, pmt_mat, "pmt_log");
-  pmt_phys = new G4PVPlacement(0,G4ThreeVector(0.*cm, 0.*cm, pmtVPosition),
-     "pmt_phys", pmt_log, LXe_phys, false, 0);
-
-  G4OpticalSurface* pmt_opsurf = new G4OpticalSurface
-    ("pmt_opsurf",unified, polished, dielectric_dielectric);
-  //G4LogicalBorderSurface* pmt_surf = 
-  new G4LogicalBorderSurface
-    ("pmt_surf", LXe_phys, pmt_phys, pmt_opsurf);
-
-  G4VisAttributes* pmt_vat= new G4VisAttributes(blue);
-  pmt_vat->SetForceSolid(true);
-  pmt_vat->SetVisibility(true);
-  pmt_log->SetVisAttributes(pmt_vat);
 
 
   // photocathode *******************************************************
