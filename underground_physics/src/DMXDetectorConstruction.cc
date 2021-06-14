@@ -261,17 +261,24 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double LXeHeight         = 0.*cm;
   G4double PMTDetectorRadius = PMTvesselRadius - vesselMetalThick;
   G4double PMTDetectorHeight = PMTvesselHeight;
-  G4double LXeTubeHeight     = 5.*cm;
+  G4double LXeTubeHeight     = 1.09*cm;
   G4double LXe_solVPos       = 0.*cm;
   G4double LXeVPos           = 0.*cm;
   G4double LXe_InnerRadius   = 0.*cm;
-  G4double LXe_OuterRadius   = 5.*cm;
+  G4double LXe_OuterRadius   = 1.775*cm;
 	
-  G4Tubs* LXe_tube = new G4Tubs("LXe_tube",
-     0.*cm, DetectorRadius, 0.5*LXeTubeHeight, 0.*deg, 360.*deg);
+ G4Tubs* LXe_tube = new G4Tubs("LXe_tube",		
+     LXe_InnerRadius, LXe_OuterRadius, 0.5*LXeTubeHeight, 0.*deg, 360.*deg);	
+     
+     G4Sphere* LXe_semicircle = new G4Sphere("LXe_semicircle", 0.*cm, LXe_OuterRadius, 
+     0.*deg, 360.*deg, 90.*deg, 180.0*deg);
+  
+  
+  G4UnionSolid* LXe_sol = new G4UnionSolid("LXe_sol", LXe_semicircle, LXe_tube, 
+    G4Transform3D(G4RotationMatrix(), G4ThreeVector(0,0,0.5*LXeTubeHeight)));
   
 
-  LXe_log  = new G4LogicalVolume(LXe_tube, H2O_mat, "LXe_log");
+  LXe_log  = new G4LogicalVolume(LXe_sol, H2O_mat, "LXe_log");
   LXe_phys = new G4PVPlacement(0, G4ThreeVector(0.*cm, 0.*cm, LXeVPos), 
     "LXe_phys", LXe_log, lab_phys, false, 0);		
 
