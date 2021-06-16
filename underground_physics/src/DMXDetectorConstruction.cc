@@ -174,7 +174,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   //world_log->SetVisAttributes(world_vat);
 
 
-  // Lab Space - AIR ********************************************************
+  // Lab Space - AIR ******************************************************** - Actually a Vacuum 
 
   G4double labWidth  = worldWidth  - 2.*wallThick; //X
   G4double labLength = worldLength - 2.*wallThick; //Y
@@ -182,7 +182,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
   G4Box* lab_box = new G4Box
      ("lab_box", 0.5*labWidth, 0.5*labLength, 0.5*labHeight );
-  lab_log  = new G4LogicalVolume(lab_box, lab_mat, "lab_log");
+  lab_log  = new G4LogicalVolume(lab_box, vacuum_mat, "lab_log");
   lab_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), "lab_phys", 
      lab_log, world_phys, false,0);
 
