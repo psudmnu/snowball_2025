@@ -69,10 +69,14 @@
 #include "G4Threading.hh"
 #include <fstream>
 #include <iomanip>
-
+#include "G4ParticleDefinition.hh" // added 
 #include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+
+
+
+
 DMXEventAction::DMXEventAction() 
   : runAct(0),genAction(0),hitsfile(0),pmtfile(0)
 {
@@ -189,6 +193,8 @@ void DMXEventAction::EndOfEventAction(const G4Event* evt) {
   particleEnergy    = 0.;
   firstLXeHitTime   = 0.;
   aveTimePmtHits    = 0.;
+  
+
 
   firstParticleName = "";
   particleName      = "";
@@ -205,9 +211,14 @@ void DMXEventAction::EndOfEventAction(const G4Event* evt) {
   start_neutron     = false;
 
 
+
+
+
   // scintillator hits
   if(SHC) {
     S_hits = SHC->entries();
+    
+    
     
     for (G4int i=0; i<S_hits; i++) {
       if(i==0) {
@@ -224,6 +235,8 @@ void DMXEventAction::EndOfEventAction(const G4Event* evt) {
       
       particleName      = (*SHC)[i]->GetParticle();
       particleEnergy    = (*SHC)[i]->GetParticleEnergy();
+      
+     
 
       if(particleName == "gamma") {
 	gamma_ev = true;
@@ -285,7 +298,7 @@ void DMXEventAction::EndOfEventAction(const G4Event* evt) {
 
   // write out event summary
   if(saveHitsFlag) 
-    writeScintHitsToFile();
+    writeScintHitsToFile(SHC);
   
   // draw trajectories
   if(drawColsFlag=="standard" && drawTrksFlag!="none")
@@ -298,13 +311,17 @@ void DMXEventAction::EndOfEventAction(const G4Event* evt) {
   // print this event by event (modulo n)  	
   if (event_id%printModulo == 0) 
     G4cout << "\n---> End of event: " << event_id << G4endl << G4endl;	
+    
+    
 
 }
 
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void DMXEventAction::writeScintHitsToFile() 
+
+
+void DMXEventAction::writeScintHitsToFile(const DMXScintHitsCollection* SHC)
 {
 
   G4String filename="hits.out";
@@ -371,24 +388,28 @@ void DMXEventAction::writeScintHitsToFile()
 
     G4AnalysisManager* man = G4AnalysisManager::Instance();
     G4int firstparticleIndex = 0;
-    if(firstParticleName == "gamma") firstparticleIndex = 1;
-    else if (firstParticleName == "neutron") firstparticleIndex = 2;
-    else if(firstParticleName == "electron") firstparticleIndex = 3;
-    else if(firstParticleName == "positron") firstparticleIndex = 4;
+    if(firstParticleName == "gamma") firstparticleIndex = 2;
+    else if (firstParticleName == "neutron") firstparticleIndex = 3;
+    else if(firstParticleName == "electron") firstparticleIndex = 4;
+    else if(firstParticleName == "positron") firstparticleIndex = 5;
+    else if(firstParticleName == "proton") firstparticleIndex = 1;	
+    else if(firstParticleName == "O16") firstparticleIndex = 16;
     else{
-      firstparticleIndex = 5;
-      man->FillH1(3,totEnergy);
+      firstparticleIndex = 6;	// Changed 5 to 6
     }
-
+    
+    man->FillH1(3,totEnergy);
     man->FillH1(4,P_hits,10); //weight
     man->FillH1(5,P_hits);
 
     man->FillH1(1,energy_pri/keV);
     man->FillH1(2,totEnergy/keV);
-    man->FillH1(6,aveTimePmtHits/ns);
+    man->FillH1(6,aveTimePmtHits/ns);	
 
     long seed1 = *seeds;
     long seed2 = *(seeds+1);    
+    
+     
     
     //Fill ntuple #2
     man->FillNtupleDColumn(2,0,event_id);
@@ -401,16 +422,69 @@ void DMXEventAction::writeScintHitsToFile()
     man->FillNtupleDColumn(2,7,firstparticleIndex);
     man->FillNtupleDColumn(2,8,firstParticleE);
     man->FillNtupleDColumn(2,9,gamma_ev);
-    man->FillNtupleDColumn(2,10,neutron_ev);
-    man->FillNtupleDColumn(2,11,positron_ev);
-    man->FillNtupleDColumn(2,12,electron_ev);
-    man->FillNtupleDColumn(2,13,other_ev);
+    man->FillNtupleDColumn(2,10,neutron_ev);		
+    man->FillNtupleDColumn(2,11,positron_ev);				
+    man->FillNtupleDColumn(2,12,electron_ev);		
+    man->FillNtupleDColumn(2,13,other_ev);	
     man->FillNtupleDColumn(2,14,seed1);
     man->FillNtupleDColumn(2,15,seed2);
     man->AddNtupleRow(2);
     
-  }
-
+    
+    
+    
+    for (G4int i=0; i<S_hits; i++) {
+    
+    	 
+    
+     	particleName      = (*SHC)[i]->GetParticle();
+  
+    	
+    	
+    	G4int PDGCode = (*SHC)[i]->GetPDGEncoding();
+    	
+    	G4int TrackID = (*SHC)[i]->GetTrackID();
+    	
+    	particleEnergy    = (*SHC)[i]->GetParticleEnergy();
+    	
+    	hitEnergyDeposited         = (*SHC)[i]->GetEdep();
+    	
+    	
+    	hitTime = (*SHC)[i]->GetTime();
+    	
+    	
+    	
+    	G4double x;
+    	G4double y;
+    	G4double z;
+    	
+    	x = ((*SHC)[i]->GetPos()).x()/mm;
+	y = ((*SHC)[i]->GetPos()).y()/mm;
+	z = ((*SHC)[i]->GetPos()).z()/mm;
+	
+    
+    	//Fill ntuple #3
+	man->FillNtupleDColumn(3,0,event_id);
+	man->FillNtupleDColumn(3,1,TrackID);
+	man->FillNtupleDColumn(3,2,(G4double) i);
+	man->FillNtupleDColumn(3,3,x);
+	man->FillNtupleDColumn(3,4,y);
+	man->FillNtupleDColumn(3,5,z);
+	//man->FillNtupleDColumn(3,5,particleName);
+	
+	man->FillNtupleDColumn(3,6,PDGCode);
+	man->FillNtupleDColumn(3,7,particleEnergy);
+	man->FillNtupleDColumn(3,8,hitEnergyDeposited);
+	man->FillNtupleDColumn(3,9,hitTime);
+	
+	
+	man->AddNtupleRow(3);
+    
+    } 
+    
+    
+   
+}
 }
 
 
@@ -439,7 +513,7 @@ void DMXEventAction::writePmtHitsToFile(const DMXPmtHitsCollection* hits)
     }
 
 
-  G4double x; G4double y; G4double z;
+ /* G4double x; G4double y; G4double z;
   G4AnalysisManager* man = G4AnalysisManager::Instance();
 
   if(pmtfile->is_open()) {
@@ -471,10 +545,10 @@ void DMXEventAction::writePmtHitsToFile(const DMXPmtHitsCollection* hits)
 	man->FillNtupleDColumn(3,4,z);
 	man->AddNtupleRow(3);
 
-      }
+      }*/
     if (event_id%printModulo == 0 && P_hits > 0) 
       G4cout << "     " << P_hits << " PMT hits in " << filename << G4endl;  
-  }
+ // }
   
 }
 
