@@ -72,14 +72,16 @@ class DMXScintHit : public G4VHit
       void SetParticle       (G4String name)     { particleName = name; };
       void SetParticleEnergy (G4double e1)       { particleEnergy = e1; };
       void SetTime           (G4double t2)       { time = t2; };
-
+      void SetParticleEncoding (G4int PDGCode)   { particleEncoding = PDGCode; };
+      void SetTrackID        (G4int TrID)	       { TrackID = TrID; };
 
       G4double GetEdep()                         { return edep; };      
       G4ThreeVector GetPos()                     { return pos; };
       G4String GetParticle()                     { return particleName;};
       G4double GetParticleEnergy()               { return particleEnergy;};
       G4double GetTime()                         { return time; };      
-
+      G4int GetPDGEncoding() 		                 { return particleEncoding; };
+      G4int GetTrackID()		                     { return TrackID; };
 
   private:
       G4double      edep;
@@ -87,7 +89,8 @@ class DMXScintHit : public G4VHit
       G4double      time;
       G4String      particleName;
       G4double      particleEnergy;
-
+      G4int	        particleEncoding;
+      G4int 	      TrackID;
 
 };
 
