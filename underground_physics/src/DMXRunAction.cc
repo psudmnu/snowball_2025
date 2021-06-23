@@ -136,10 +136,17 @@ void DMXRunAction::Book()
   //id==3
   man->CreateNtuple("tree3", "PMT Hits Info");
   man->CreateNtupleDColumn("event");
+  man->CreateNtupleDColumn("TrackID");
   man->CreateNtupleDColumn("hits");
   man->CreateNtupleDColumn("xpos");
   man->CreateNtupleDColumn("ypos");
   man->CreateNtupleDColumn("zpos");
+ // man->CreateNtupleDColumn("particleName");
+ 
+  man->CreateNtupleDColumn("PDGCode");
+  man->CreateNtupleDColumn("particleEnergy");
+  man->CreateNtupleDColumn("hitEnergyDeposited");
+  man->CreateNtupleDColumn("hitTime");
   man->FinishNtuple();
  
   // Creating 1-dimensional histograms
