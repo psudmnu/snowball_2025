@@ -91,6 +91,8 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4double edep = aStep->GetTotalEnergyDeposit();
   G4ParticleDefinition* particleType = aStep->GetTrack()->GetDefinition();
   G4String particleName = particleType->GetParticleName();
+  G4int particleEncoding = particleType->GetPDGEncoding();
+  G4int TrackID = aStep->GetTrack()->GetTrackID();
 
   G4double stepl = 0.;
   if (particleType->GetPDGCharge() != 0.)
@@ -106,6 +108,8 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   newHit->SetTime(aStep->GetPreStepPoint()->GetGlobalTime());
   newHit->SetParticle(particleName);
   newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy() );
+  newHit->SetParticleEncoding(particleEncoding);
+  newHit->SetTrackID(TrackID);
 
   HitID = scintillatorCollection->insert(newHit);
   
