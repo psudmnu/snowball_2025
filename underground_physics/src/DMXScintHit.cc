@@ -57,6 +57,8 @@ DMXScintHit::DMXScintHit()
   pos = G4ThreeVector(0., 0., 0.);
   time = 0.;
   particleEnergy = 0.;
+  particleEncoding = 0;
+  TrackID = 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -74,6 +76,8 @@ DMXScintHit::DMXScintHit(const DMXScintHit& right)
   time           = right.time;
   particleName   = right.particleName;
   particleEnergy = right.particleEnergy;
+  particleEncoding = right.particleEncoding;
+  TrackID = right.TrackID;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -85,6 +89,8 @@ const DMXScintHit& DMXScintHit::operator=(const DMXScintHit& right)
   time            = right.time;
   particleName    = right.particleName;
   particleEnergy  = right.particleEnergy;
+  particleEncoding = right.particleEncoding;
+  TrackID = right.TrackID;
   return *this;
 }
 
