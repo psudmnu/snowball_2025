@@ -93,12 +93,14 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4String particleName = particleType->GetParticleName();
   G4int particleEncoding = particleType->GetPDGEncoding();
   G4int TrackID = aStep->GetTrack()->GetTrackID();
+  G4int ParentID = aStep->GetTrack()->GetParentID();
+  G4double TrackLength = aStep->GetTrack()->GetTrackLength();
 
   G4double stepl = 0.;
-  if (particleType->GetPDGCharge() != 0.)
+  if ( (particleType->GetPDGCharge() != 0.) || (particleType->GetPDGEncoding() == 2112) ) // Changed this line so that neutrons counted as hits in DMXScintHit, PDG_Code[neutron] is 2112
     stepl = aStep->GetStepLength();
   
-  if ((edep==0.)&&(stepl==0.)) return false;      
+  if ((edep==0.)&&(stepl==0.)) return false;     
 
 
   // fill in hit
@@ -110,6 +112,8 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy() );
   newHit->SetParticleEncoding(particleEncoding);
   newHit->SetTrackID(TrackID);
+  newHit->SetParentID(ParentID);
+  newHit->SetTrackLength(TrackLength);
 
   HitID = scintillatorCollection->insert(newHit);
   
