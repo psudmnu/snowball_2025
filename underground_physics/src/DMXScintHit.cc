@@ -59,6 +59,8 @@ DMXScintHit::DMXScintHit()
   particleEnergy = 0.;
   particleEncoding = 0;
   TrackID = 0;
+  ParentID = 0;
+  TrackLength = 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -78,6 +80,8 @@ DMXScintHit::DMXScintHit(const DMXScintHit& right)
   particleEnergy = right.particleEnergy;
   particleEncoding = right.particleEncoding;
   TrackID = right.TrackID;
+  ParentID = right.ParentID;
+  TrackLength = right.TrackLength;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -91,6 +95,8 @@ const DMXScintHit& DMXScintHit::operator=(const DMXScintHit& right)
   particleEnergy  = right.particleEnergy;
   particleEncoding = right.particleEncoding;
   TrackID = right.TrackID;
+  ParentID = right.ParentID;
+  TrackLength = right.TrackLength;
   return *this;
 }
 
