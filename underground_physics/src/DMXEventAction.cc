@@ -438,19 +438,20 @@ void DMXEventAction::writeScintHitsToFile(const DMXScintHitsCollection* SHC)
     	 
     
      	particleName      = (*SHC)[i]->GetParticle();
-  
-    	
-    	
+ 
     	G4int PDGCode = (*SHC)[i]->GetPDGEncoding();
     	
     	G4int TrackID = (*SHC)[i]->GetTrackID();
+	    
+	G4int ParentID = (*SHC)[i]->GetParentID();
     	
     	particleEnergy    = (*SHC)[i]->GetParticleEnergy();
     	
     	hitEnergyDeposited         = (*SHC)[i]->GetEdep();
     	
-    	
     	hitTime = (*SHC)[i]->GetTime();
+	    
+	G4double TrackLength = (*SHC)[i]->GetTrackLength();
     	
     	
     	
@@ -465,17 +466,19 @@ void DMXEventAction::writeScintHitsToFile(const DMXScintHitsCollection* SHC)
     
     	//Fill ntuple #3
 	man->FillNtupleDColumn(3,0,event_id);
-	man->FillNtupleDColumn(3,1,TrackID);
-	man->FillNtupleDColumn(3,2,(G4double) i);
-	man->FillNtupleDColumn(3,3,x);
-	man->FillNtupleDColumn(3,4,y);
-	man->FillNtupleDColumn(3,5,z);
-	//man->FillNtupleDColumn(3,5,particleName);
+	man->FillNtupleDColumn(3,1,ParentID);
+	man->FillNtupleDColumn(3,2,TrackID);
+	man->FillNtupleDColumn(3,3,(G4double) i);
+	man->FillNtupleDColumn(3,4,x);
+	man->FillNtupleDColumn(3,5,y);
+	man->FillNtupleDColumn(3,6,z);
+	//man->FillNtupleDColumn(3,5,particleName);  Doesn't work, ntuple cannot hold strings
 	
-	man->FillNtupleDColumn(3,6,PDGCode);
-	man->FillNtupleDColumn(3,7,particleEnergy);
-	man->FillNtupleDColumn(3,8,hitEnergyDeposited);
-	man->FillNtupleDColumn(3,9,hitTime);
+	man->FillNtupleDColumn(3,7,PDGCode);
+	man->FillNtupleDColumn(3,8,particleEnergy);
+	man->FillNtupleDColumn(3,9,hitEnergyDeposited);
+	man->FillNtupleDColumn(3,10,hitTime);
+	man->FillNtupleDColumn(3,11,TrackLength);
 	
 	
 	man->AddNtupleRow(3);
