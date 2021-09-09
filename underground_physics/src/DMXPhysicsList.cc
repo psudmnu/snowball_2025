@@ -445,11 +445,22 @@ void DMXPhysicsList::ConstructEM() {
       {
 	//multiple scattering
 	pmanager->AddProcess(new G4hMultipleScattering,-1,1,-1);
+	    
+
+	//ionisation - New code
+	G4ionIonisation* ionIoni = new G4ionIonisation();
+	ionIoni->SetStepFunction(0.1, 20*um);
+	pmanager->AddProcess(ionIoni,                  -1, 2, 1);
 	
+	    
+	/*  Original Code for Helium like atoms, New Code is the same except for the number code used for the ionIoni process which was changed
+	to match the number code of the ionIoni process for GenericIon. The new code doesn't work 100%, but it allows for geant4 to continue running and not crash 
+	after encountering a Helium like atom
 	//ionisation
 	G4ionIonisation* ionIoni = new G4ionIonisation();
 	ionIoni->SetStepFunction(0.1, 20*um);
 	pmanager->AddProcess(ionIoni,                  -1, 2,-2);
+	*/
       }
     else if (particleName == "GenericIon")
       {
