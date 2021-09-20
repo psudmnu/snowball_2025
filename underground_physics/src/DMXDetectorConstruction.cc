@@ -97,7 +97,7 @@ DMXDetectorConstruction::DMXDetectorConstruction()
   theMaxTimeCuts      = DBL_MAX;
   theMaxStepSize      = DBL_MAX;
   theDetectorStepSize = DBL_MAX;
-  theRoomTimeCut      = 1000. * nanosecond;
+  theRoomTimeCut      = 1000. * nanosecond;	
   theMinEkine         = 250.0*eV; // minimum kinetic energy required in volume
   theRoomMinEkine     = 250.0*eV; // minimum kinetic energy required in volume
   
@@ -157,13 +157,13 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
   //NB: measured INSIDE of lab, therefore have to add twice wall thickness
   G4double wallThick   = 24.*cm;
-  G4double worldWidth  = 470.0*cm + 2.*wallThick; // "x"
-  G4double worldLength = 690.0*cm + 2.*wallThick; // "y"
-  G4double worldHeight = 280.0*cm + 2.*wallThick; // "z"
+  G4double worldWidth  = 10000000.0*cm + 2.*wallThick; // "x"
+  G4double worldLength = 10000000.0*cm + 2.*wallThick; // "y"
+  G4double worldHeight = 10000000.0*cm + 2.*wallThick; // "z"
 
   G4Box* world_box = new G4Box
      ("world_box", 0.5*worldWidth, 0.5*worldLength, 0.5*worldHeight );
-  world_log  = new G4LogicalVolume(world_box, world_mat, "world_log");
+  world_log  = new G4LogicalVolume(world_box, vacuum_mat, "world_log");	// changed world_mat to vacuum_mat
   world_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),
      "world_phys", world_log, NULL, false,0);
 
@@ -174,7 +174,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   //world_log->SetVisAttributes(world_vat);
 
 
-  // Lab Space - AIR ******************************************************** - Actually a Vacuum 
+  // Lab Space - AIR ********************************************************
 
   G4double labWidth  = worldWidth  - 2.*wallThick; //X
   G4double labLength = worldLength - 2.*wallThick; //Y
@@ -192,38 +192,44 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   lab_vat->SetVisibility(false);
   lab_log->SetVisAttributes(lab_vat);
 
-
+	
 
   // Now start with detector assembly:
 
   // first LN2 cooling container: *******************************************
-  // LN2jacket vacuum: **********************
+  // LN2jacket vacuum: ******************************************************
 
   G4double LN2jacketMetalThick = 2.0*mm;
   
 
+
   // LN2 vessel: ************************************************************
   // and finally LN2: *******************************************************
   // outer vacuum jacket volume: stainless steel ****************************
-	
+
+ 
   G4double jacketMetalThick = LN2jacketMetalThick;
 
-  // outer vacuum jacket flanges: stainless steel *************************
+
+  // outer vacuum jacket flanges: stainless steel **************************
   // vacuum **************************************************************
   // copper cooling jacket volume: **************************************
 
- 
+  
   G4double vesselHeight     = 320.0*mm;
-
-
+  
+ 
   // inner vessel jacket volume: stainless steel ************************
 
   //  G4double vesselHeight = 320.0*mm; // - moved earlier
   G4double vesselMetalThick      = jacketMetalThick;
   G4double vesselRadius          = 75.0*mm + vesselMetalThick;
+ 
   
   G4double PMTvesselRadius       = 31.0*mm + vesselMetalThick;
   G4double PMTvesselHeight       = 152.0*mm;
+  
+  
   
   G4double TotalvesselHeight     = PMTvesselHeight + vesselHeight;
 
@@ -248,14 +254,14 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
      0.*cm, DetectorRadius, 0.5*GXeHeight, 0.*deg, 360.*deg);
   GXe_log  = new G4LogicalVolume(GXe_tube, GXe_mat, "GXe_log");
   GXe_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,GXeVPos), 
-     "GXe_phys", GXe_log, world_phys, false,0);	// Changed vessel_phys to world_phys
+     "GXe_phys", GXe_log, world_phys, false,0);		// Changed vessel_phys to world_phys
 
   G4VisAttributes* GXe_vat = new G4VisAttributes(cyan);
   // GXe_vat->SetForceSolid(true);
   GXe_vat->SetVisibility(true);
   GXe_log->SetVisAttributes(GXe_vat);
-
 */
+
   // liquid phase *******************************************************
 
   G4double LXeHeight         = 0.*cm;
@@ -266,8 +272,13 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   G4double LXeVPos           = 0.*cm;
   G4double LXe_InnerRadius   = 0.*cm;
   G4double LXe_OuterRadius   = 1.775*cm;
-	
- G4Tubs* LXe_tube = new G4Tubs("LXe_tube",		
+  
+  /*G4Tubs* LXe_tube = new G4Tubs("LXe_tube",		
+     0.*cm, 100.*cm, 0.5*cm, 0.*deg, 360.*deg);	
+*/
+
+
+  G4Tubs* LXe_tube = new G4Tubs("LXe_tube",		
      LXe_InnerRadius, LXe_OuterRadius, 0.5*LXeTubeHeight, 0.*deg, 360.*deg);	
      
      G4Sphere* LXe_semicircle = new G4Sphere("LXe_semicircle", 0.*cm, LXe_OuterRadius, 
@@ -276,15 +287,20 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   
   G4UnionSolid* LXe_sol = new G4UnionSolid("LXe_sol", LXe_semicircle, LXe_tube, 
     G4Transform3D(G4RotationMatrix(), G4ThreeVector(0,0,0.5*LXeTubeHeight)));
-  
-
-  LXe_log  = new G4LogicalVolume(LXe_sol, H2O_mat, "LXe_log");
+     
+     /* Guide for tubes 
+     G4Tubs* name_tube = new G4Tubs("name_tube",		
+     inner radius, outer radius, half-height, start degree [ex 0.*deg], end degree [ex 360.*deg]);
+     */
+    
+   
+  LXe_log  = new G4LogicalVolume(LXe_sol, H2O_mat, "LXe_log");	
   LXe_phys = new G4PVPlacement(0, G4ThreeVector(0.*cm, 0.*cm, LXeVPos), 
-    "LXe_phys", LXe_log, lab_phys, false, 0);		
+    "LXe_phys", LXe_log, lab_phys, false, 0);	
 
   // attributes
   G4VisAttributes* LXe_vat = new G4VisAttributes(lblue);
-  LXe_vat->SetForceSolid(true);
+  LXe_vat->SetForceSolid(true);	
   LXe_vat->SetVisibility(true);
   LXe_log->SetVisAttributes(LXe_vat);
 
@@ -305,8 +321,8 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   // gaslag_vat->SetForceSolid(true);
   gaslag_vat->SetVisibility(true);
   gaslag_log->SetVisAttributes(gaslag_vat);
-
 */
+
   // liquid phase vessel lagging - for optical properties:
 
   G4double lagTubeRadius = DetectorRadius - laggingThickness;
@@ -342,7 +358,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   // liquid and gas phase - so removed below:
   /*
   G4LogicalBorderSurface* VesselSurface;
-  VesselSurface = new G4LogicalBorderSurface	// These three lines were originally commented out
+  VesselSurface = new G4LogicalBorderSurface				//This section was commented out initially
     ("Vessel", liqPhase_phys, vessel_phys, OpVesselSurface);
   */
 /*
@@ -378,6 +394,23 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
   // americium ***********************************************************
   // Photomultiplier: ETL 9829 QA ****************************************
   // photocathode *******************************************************
+
+  
+  
+
+  // ......................................................................
+  /* Ethan's attempt
+  
+   G4Tubs* LXe_tube = new G4Tubs("GXe_tube",
+     0.*cm, 0.5*cm, 0.5*cm, 0.*deg, 360.*deg);
+  
+   LXe_log  = new G4LogicalVolume(LXe_sol, LXe_mat, "LXe_log");
+ 
+  LXe_phys = new G4PVPlacement(0, G4ThreeVector(0.*cm, 0.*cm, LXeVPos), 
+    "LXe_phys", LXe_log, vessel_phys, false, 0);
+  
+  */
+
   // ......................................................................
   // attach user limits ...................................................
 
@@ -402,7 +435,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 					  theRoomTimeCut,   // Time cut
 					  theRoomMinEkine); // min energy
 
-
+ 
 
   theUserLimitsForDetector = new G4UserLimits(theDetectorStepSize,
 					      DBL_MAX, // Track Max
@@ -507,6 +540,5 @@ void DMXDetectorConstruction::SetTimeCut(G4double val)
 }  
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
 
 
